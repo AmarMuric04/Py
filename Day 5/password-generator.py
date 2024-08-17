@@ -92,4 +92,4 @@ for char in password_list:
 
 
 # password = "".join(temp)
-print(f"Your new password is: {password}")
+(f"Your new password is: {password}")
