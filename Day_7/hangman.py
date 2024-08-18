@@ -18,7 +18,7 @@ $$ |  $$ |\$$$$$$$ |$$ |  $$ |\$$$$$$$ |$$ | $$ | $$ |\$$$$$$$ |$$ |  $$ |
                                \______/                                   """
 )
 
-chosen_word = random.choice(hangman_words)
+hidden_word = random.choice(hangman_words)
 
 num_of_lives = 6
 
@@ -26,15 +26,25 @@ letters_used = []
 
 placeholder_list = []
 placeholder = ""
-for letter in chosen_word:
+for letter in hidden_word:
     placeholder_list.append("_")
     placeholder += "_"
 
-print(f"{placeholder} ({len(chosen_word)})")
+print(f"{placeholder} ({len(hidden_word)})")
 
 while True:
     users_guess = input("Guess a letter: ").lower()
     letter_found = False
+
+    if len(users_guess) > 1:
+        if users_guess == hidden_word:
+            print(win_message)
+            print(f"\nThe hidden word was {hidden_word}!\n")
+            break
+        else:
+            print("Oops! Not the right word!")
+            print("You lose a life!")
+            num_of_lives -= 1
 
     if users_guess in letters_used:
         print("Letter was already used. Try again!")
@@ -43,7 +53,7 @@ while True:
     letters_used.append(users_guess)
 
     index = 0
-    for letter in chosen_word:
+    for letter in hidden_word:
         if users_guess == letter:
             placeholder_list[index] = letter
             letter_found = True
@@ -57,11 +67,11 @@ while True:
         print("You found a letter!")
 
     placeholder = "".join(placeholder_list)
-    if placeholder == chosen_word:
+    if placeholder == hidden_word:
         print(win_message)
         print(f"Letters used: {len(letters_used)}")
-        print(f"Hidden word length: {len(chosen_word)}")
-        print(f"Accuracy: {(len(chosen_word) / len(letters_used) * 100):.2f}%")
+        print(f"Hidden word length: {len(hidden_word)}")
+        print(f"Accuracy: {(len(hidden_word) / len(letters_used) * 100):.2f}%")
         break
 
     if num_of_lives == -1:
@@ -73,4 +83,4 @@ while True:
 
 if num_of_lives == -1:
     print("You lost... too bad!")
-    print(f"The word was {chosen_word}!")
+    print(f"The word was {hidden_word}!")
