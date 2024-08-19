@@ -37,13 +37,13 @@ def caesar(text, shift_amount):
     for char in text.lower():
         if char in symbols:
             index = symbols.index(char)
-            new_text += symbols[index + shift_amount % len(symbols)]
+            new_text += symbols[(index + shift_amount) % len(symbols)]
         elif char in letters:
             index = letters.index(char)
-            new_text += letters[index + shift_amount % len(letters)]
+            new_text += letters[(index + shift_amount) % len(letters)]
         elif char in numbers:
             index = numbers.index(char)
-            new_text += numbers[index + shift_amount % len(numbers)]
+            new_text += numbers[(index + shift_amount) % len(numbers)]
     print(new_text)
 
 

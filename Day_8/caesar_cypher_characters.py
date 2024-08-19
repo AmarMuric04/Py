@@ -1,3 +1,3 @@
-symbols = "!@#$%^&*()_+-=[]{}|;:',.<>/?`~"
+symbols = "!@#$%^&*()_+-=[]{}|;:',.<>/?`~ "
 letters = "abcdefghijklmnopqrstuvwxyz"
 numbers = "0123456789"
