@@ -1,78 +1,6 @@
-import random
 import time
 
-from blackjack_cards import blackjack_deck
-
-
-def update_aces(hand):
-    if len(hand) > 2 and 11 in hand:
-        hand[hand.index(11)] = 1
-    elif len(hand) == 2 and 1 in hand:
-        hand[hand.index(1)] = 11
-
-
-def add_card(player, hand):
-    card = random.choice(blackjack_deck)
-    blackjack_deck.remove(card)
-    if card == 1 and not 11 in hand:
-        card = 11
-    hand.append(card)
-    update_aces(hand)
-    time.sleep(0.5)
-    if player == "Dealer" and len(hand) == 2:
-        print("Dealer gets a mystery card!")
-    else:
-        print(f"{player} gets a {card}!")
-
-
-def print_cards(player, hand):
-    print(f"{player}'s cards: ")
-    if player == "Dealer" and len(hand) == 2:
-        print(" ___   ___ ", end=" ")
-        print()
-        symbol = hand[0]
-        if symbol == 11:
-            symbol = "A"
-        if symbol == 10:
-            symbol = "K"
-        print(f"|{symbol}  | |#  |", end=" ")
-        print()
-
-        print("| ⚭ | | # |", end=" ")
-        print()
-
-        print(f"|__{symbol}| |__#|", end=" ")
-        print()
-    else:
-        for card in hand:
-            print(" ___ ", end=" ")
-
-        print()
-
-        for card in hand:
-            symbol = card
-            if symbol == 11:
-                symbol = "A"
-            if symbol == 10:
-                symbol = "K"
-            print(f"|{symbol}  |", end=" ")
-
-        print()
-
-        for _ in hand:
-            print("| ⚭ |", end=" ")
-
-        print()
-
-        for card in hand:
-            symbol = card
-            if symbol == 11:
-                symbol = "A"
-            if symbol == 10:
-                symbol = "K"
-            print(f"|__{symbol}|", end=" ")
-
-        print(f" ({sum(hand)})")
+from blackjack_cards import add_card, print_cards, update_aces
 
 
 def blackjack():
@@ -109,6 +37,7 @@ def blackjack():
                 print("\nYou hit a blackjack!")
                 time.sleep(0.5)
         if move == "stand":
+            print(f"The hidden card was a {dealers_hand[1]}")
             if sum(dealers_hand) < 17:
                 time.sleep(0.5)
                 print("\nLet's see what the dealer gets!")
@@ -133,15 +62,28 @@ def blackjack():
     dealers_score = sum(dealers_hand)
 
     print("")
-    if players_score > 21 or dealers_score > players_score:
+    if players_score > 21:
         print(f"Dealer wins with {dealers_score}")
-    elif dealers_score > 21 or players_score > dealers_score:
+    elif dealers_score > 21:
+        print(f"You win with {players_score}")
+    elif dealers_score > players_score:
+        print(f"Dealer wins with {dealers_score}")
+    elif players_score > dealers_score:
         print(f"You win with {players_score}")
     elif dealers_score == players_score:
         print("It's a draw!")
 
 
 play = True
+print(
+    """
+.------..------..------..------..------..------..------..------..------.
+|B.--. ||L.--. ||A.--. ||C.--. ||K.--. ||J.--. ||A.--. ||C.--. ||K.--. |
+| :(): || :/\: || (\/) || :/\: || :/\: || :(): || (\/) || :/\: || :/\: |
+| ()() || (__) || :\/: || :\/: || :\/: || ()() || :\/: || :\/: || :\/: |
+| '--'B|| '--'L|| '--'A|| '--'C|| '--'K|| '--'J|| '--'A|| '--'C|| '--'K|
+`------'`------'`------'`------'`------'`------'`------'`------'`------'"""
+)
 print("Welcome to blackjack!")
 start = input("Are you ready? (y/n): ") == "y"
 
@@ -149,5 +91,3 @@ if start:
     while play:
         blackjack()
         play = input("Want to play another match? (y/n): ") == "y"
-
-# print(blackjack_deck)
