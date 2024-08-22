@@ -1,86 +1,87 @@
 import random
 import time
 
-blackjack_deck = [
-    1,
-    1,
-    1,
-    1,
-    2,
-    2,
-    2,
-    2,
-    3,
-    3,
-    3,
-    3,
-    4,
-    4,
-    4,
-    4,
-    5,
-    5,
-    5,
-    5,
-    6,
-    6,
-    6,
-    6,
-    7,
-    7,
-    7,
-    7,
-    8,
-    8,
-    8,
-    8,
-    9,
-    9,
-    9,
-    9,
-    10,
-    10,
-    10,
-    10,
-    10,
-    10,
-    10,
-    10,
-    10,
-    10,
-    10,
-    10,
-    10,
-    10,
-    10,
-    10,
-]
+blackjack_deck = {
+    "1♥": 1,
+    "1♦": 1,
+    "1♠": 1,
+    "1♣": 1,
+    "2♥": 2,
+    "2♦": 2,
+    "2♠": 2,
+    "2♣": 2,
+    "3♥": 3,
+    "3♦": 3,
+    "3♠": 3,
+    "3♣": 3,
+    "4♥": 4,
+    "4♦": 4,
+    "4♠": 4,
+    "4♣": 4,
+    "5♥": 5,
+    "5♦": 5,
+    "5♠": 5,
+    "5♣": 5,
+    "6♥": 6,
+    "6♦": 6,
+    "6♠": 6,
+    "6♣": 6,
+    "7♥": 7,
+    "7♦": 7,
+    "7♠": 7,
+    "7♣": 7,
+    "8♥": 8,
+    "8♦": 8,
+    "8♠": 8,
+    "8♣": 8,
+    "9♥": 9,
+    "9♦": 9,
+    "9♠": 9,
+    "9♣": 9,
+    "T♥": 10,
+    "T♦": 10,
+    "T♠": 10,
+    "T♣": 10,
+    "J♥": 10,
+    "J♦": 10,
+    "J♠": 10,
+    "J♣": 10,
+    "Q♥": 10,
+    "Q♦": 10,
+    "Q♠": 10,
+    "Q♣": 10,
+    "K♥": 10,
+    "K♦": 10,
+    "K♠": 10,
+    "K♣": 10,
+    "A♥": 11,
+    "A♦": 11,
+    "A♠": 11,
+    "A♣": 11,
+}
 
 
 def update_aces(hand):
-    if len(hand) > 2 and 11 in hand:
-        hand[hand.index(11)] = 1
-    elif len(hand) == 2 and 1 in hand:
-        hand[hand.index(1)] = 11
+    if len(hand) > 2:
+        for card in hand:
+            if card[0].startswith("A"):
+                hand[card] = 1
 
 
 def print_cards(player, hand):
+    time.sleep(0.25)
     print(f"{player}'s cards: ")
     if player == "Dealer" and len(hand) == 2:
+        first_card = list(hand)[0]
         print(" ___   ___ ", end=" ")
         print()
-        symbol = hand[0]
-        if symbol == 11:
-            symbol = "A"
-        if symbol == 10:
-            symbol = "K"
-        print(f"|{symbol}  | |#  |", end=" ")
+        print(f"|{first_card[0]}  | |#  |", end=" ")
         print()
 
-        print("| ⚭ | | # |", end=" ")
+        print(f"| {first_card[1]} | | # |", end=" ")
         print()
 
-        print(f"|__{symbol}| |__#|", end=" ")
+        print(f"|__{first_card[0]}| |__#|", end=" ")
         print()
     else:
         for card in hand:
@@ -89,40 +90,35 @@ def print_cards(player, hand):
         print()
 
         for card in hand:
-            symbol = card
-            if symbol == 11:
-                symbol = "A"
-            if symbol == 10:
-                symbol = "K"
-            print(f"|{symbol}  |", end=" ")
-
-        print()
-
-        for _ in hand:
-            print("| ⚭ |", end=" ")
+            print(f"|{card[0]}  |", end=" ")
 
         print()
 
         for card in hand:
-            symbol = card
-            if symbol == 11:
-                symbol = "A"
-            if symbol == 10:
-                symbol = "K"
-            print(f"|__{symbol}|", end=" ")
+            print(f"| {card[-1]} |", end=" ")
 
-        print(f" ({sum(hand)})")
+        print()
+        for card in hand:
+            print(f"|__{card[0]}|", end=" ")
+
+        print(f" ({sum(hand.values())})")
+    print()
 
 
 def add_card(player, hand):
-    card = random.choice(blackjack_deck)
-    blackjack_deck.remove(card)
-    if card == 1 and not 11 in hand:
-        card = 11
-    hand.append(card)
+    card = random.choice(list(blackjack_deck.items()))
+    blackjack_deck.pop(card[0])
+
+    hand[card[0]] = card[1]
+
+    aces = [card for card in hand if card.startswith("A")]
+
+    if len(aces) > 1:
+        hand[aces[1]] = 1
     update_aces(hand)
+    # print(hand)
     time.sleep(0.5)
     if player == "Dealer" and len(hand) == 2:
         print("Dealer gets a mystery card!")
     else:
-        print(f"{player} gets a {card}!")
+        print(f"{player} gets a {card[0]}!")
