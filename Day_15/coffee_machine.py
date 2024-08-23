@@ -10,32 +10,34 @@ MENU = {
     },
 }
 
-resources = {"water": 100, "milk": 50, "coffee": 76, "money": 2.5}
+resources = {"water": 800, "milk": 500, "coffee": 76, "money": 2.5}
 
 
 def check_resources(drink):
-    if "milk" in drink and drink["ingredients"]["milk"] > resources["milk"]:
+    ingredients = drink["ingredients"]
+    if "milk" in drink and ingredients["milk"] > resources["milk"]:
         print("Sorry, there is not enough milk for this drink.")
         return False
-    if "coffee" in drink and drink["ingredients"]["coffee"] > resources["coffee"]:
+    if "coffee" in drink and ingredients["coffee"] > resources["coffee"]:
         print("Sorry, there is not enough coffee for this drink.")
         return False
-    if "water" in drink and drink["ingredients"]["water"] > resources["water"]:
+    if "water" in drink and ingredients["water"] > resources["water"]:
         print("Sorry, there is not enough water for this drink.")
         return False
     return True
 
 
 def enough_money(resources, drink, inserted):
+    ingredients = drink["ingredients"]
     if inserted < drink["cost"]:
         print("Sorry that's not enough money. Money refunded")
     else:
-        if "water" in drink["ingredients"]:
-            resources["water"] -= drink["ingredients"]["water"]
-        if "milk" in drink["ingredients"]:
-            resources["milk"] -= drink["ingredients"]["milk"]
-        if "coffee" in drink["ingredients"]:
-            resources["coffee"] -= drink["ingredients"]["coffee"]
+        if "water" in ingredients:
+            resources["water"] -= ingredients["water"]
+        if "milk" in ingredients:
+            resources["milk"] -= ingredients["milk"]
+        if "coffee" in ingredients:
+            resources["coffee"] -= ingredients["coffee"]
         resources["money"] += inserted
         print("Enjoy your drink!")
         if inserted > drink["cost"]:
