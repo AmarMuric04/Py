@@ -14,8 +14,8 @@ def check_answer(guess, a, b):
 
 def game():
     score = 0
-    while len(data) != 0:
-        compare_a = random.choice(data)
+    compare_a = random.choice(data)
+    while True:
         compare_b = random.choice(data)
         while compare_b == compare_a:
             compare_b = random.choice(data)
@@ -25,11 +25,12 @@ def game():
         )
 
         print(
-            """ 
-__   _____ 
- \ \ / / __|
-  \ V /\__ \\
-   \_/ |___/\n"""
+            """
+__    __
+| |  / /____
+| | / / ___/
+| |/ (__  )\\
+|___/____(_)\n"""
         )
 
         print(
@@ -44,6 +45,8 @@ __   _____
         else:
             print("Wrong!\n")
             break
+        compare_a = compare_b
+        print("\n" * 20)
 
 
 play = True
