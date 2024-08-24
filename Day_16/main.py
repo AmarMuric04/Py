@@ -23,8 +23,8 @@ table.add_rows(
         ["Charmander", "Fire"],
     ]
 )
-  
+
 # table.align = "l"
-# table.align = "r"
+# table.align = "r" 
 
 print(table)
