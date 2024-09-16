@@ -5,9 +5,9 @@ import colorgram
 
 COLOR_AMOUNT = 25
 
-colors = colorgram.extract(
-    r"C:\Users\AMAR\Desktop\a\Py\Day_18\hirst_painting/hirst.jpg", COLOR_AMOUNT
-)
+# colors = colorgram.extract(
+#     r"C:\Users\AMAR\Desktop\a\Py\Day_18\hirst_painting/hirst.jpg", COLOR_AMOUNT
+# )
 
 turtle = t.Turtle()
 t.colormode(255)
@@ -50,17 +50,16 @@ rgb_colors = [
 
 print(rgb_colors)
 
-turtle.pensize(20)
 turtle.hideturtle()
 turtle.penup()
-turtle.goto(-225, -300)
+turtle.goto(-250, -250)
 turtle.speed("fastest")
 
 for dot in range(100):
     turtle.penup()
-    if dot % 10 == 0:
-        turtle.goto(-225, turtle.ycor() + 50)
-    else:
+    if dot % 10 == 0 and dot != 0:
+        turtle.goto(-250, turtle.ycor() + 50)
+    elif dot % 10 != 0:
         turtle.forward(50)
     turtle.pendown()
     turtle.dot(20, random.choice(rgb_colors))
