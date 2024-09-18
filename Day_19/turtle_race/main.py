@@ -1,25 +1,68 @@
 import random
 from turtle import Screen, Turtle
 
-turtles = [Turtle() for _ in range(5)]
+TURTLES = 5
+SCREEN_HEIGHT = 400
+SCREEN_WIDTH = 500
+TURTLE_HEIGHT = 20
+TOP_Y = SCREEN_HEIGHT / 2 - TURTLE_HEIGHT
+BOTTOM_Y = -TOP_Y + TURTLE_HEIGHT
+VERTICAL_RANGE = TOP_Y - BOTTOM_Y - TURTLE_HEIGHT * (TURTLES - 1)
+
+turtles = []
 screen = Screen()
-screen.setup(500, 400)
+screen.setup(width=SCREEN_WIDTH, height=SCREEN_HEIGHT)
+screen.bgcolor("black")
 
-colors = ["red", "orange", "yellow", "green", "blue"]
+colors = [
+    "red",
+    "orange",
+    "yellow",
+    "green",
+    "blue",
+    "purple",
+    "magenta",
+    "pink",
+    "white",
+]
 
-for index, turtle in enumerate(turtles):
-    turtle.penup()
+for index in range(TURTLES):
+    # Creating a turtle
+    turtle = Turtle()
+    turtles.append(turtle)
+
+    # Modifying the turtle
+    turtle.shapesize(stretch_wid=TURTLE_HEIGHT / 20, stretch_len=TURTLE_HEIGHT / 20)
     turtle.shape("turtle")
-    turtle.goto(-225, index * 25)
     turtle.color(colors[index])
+    turtle.pensize(10)
+    turtle.pencolor(colors[index])
+
+    # Updating the position
+    turtle.penup()
+    if TURTLES > 1:
+        y_position = TOP_Y - index * (VERTICAL_RANGE / (TURTLES - 1) + TURTLE_HEIGHT)
+    else:
+        y_position = (TOP_Y + BOTTOM_Y) / 2
+
+    turtle.goto(-225, y_position)
+    turtle.pendown()
+
+    turtle.speed(1)
 
 
 def move(t):
     global bet
+    move = 0
     if t.fillcolor() == bet:
-        t.forward(random.randint(4, 20))
+        move = random.randint(4, 20)
     else:
-        t.forward(random.randint(0, 20))
+        move = random.randint(0, 20)
+
+    # Disallowing the turtle to move off-screen
+    if move + t.xcor() > SCREEN_WIDTH / 2 - TURTLE_HEIGHT:
+        move = SCREEN_WIDTH / 2 - TURTLE_HEIGHT - t.xcor()
+    t.forward(move)
 
 
 bet = screen.textinput(
