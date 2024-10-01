@@ -1,36 +1,47 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-# Define the x range
-x = np.linspace(-5, 5, 400)
 
-# Calculate the corresponding y values for each curve
-y1_pos = np.sqrt(1 - x)  # Positive part of y^2 = 1 - x
-y1_neg = -np.sqrt(1 - x)  # Negative part of y^2 = 1 - x
-y2 = -x - 1  # Line equation
-y3 = np.full_like(x, 4)  # Horizontal line y = 4
+# Define the functions
+def f1(x):
+    return -(x**2) + x + 4
 
-# Create the plot
+
+def f2(x):
+    return -x + 1
+
+
+def f3(x):
+    return x
+
+
+# Create an array of x values
+x = np.linspace(-3, 5, 400)
+
+# Calculate y values for each function
+y1 = f1(x)
+y2 = f2(x)
+y3 = f3(x)
+
+# Set up the plot
 plt.figure(figsize=(10, 6))
+plt.plot(x, y1, label="y = -x^2 + x + 4", color="blue")
+plt.plot(x, y2, label="y = -x + 1", color="red")
+plt.plot(x, y3, label="y = x", color="green")
 
-# Plot each curve
-plt.plot(x, y1_pos, label="$y^2 = 1 - x$", color="blue")
-plt.plot(x, y1_neg, color="blue")  # Negative part of the parabola
-plt.plot(x, y2, label="$y = -x - 1$", color="orange")
-plt.plot(x, y3, label="$y = 4$", color="green")
-
-# Set the limits for the plot
-plt.xlim(-5, 5)
-plt.ylim(-10, 10)
+# Outline the axes
+plt.axhline(0, color="black", linewidth=1.5, ls="-")  # y=0 (x-axis)
+plt.axvline(0, color="black", linewidth=1.5, ls="-")  # x=0 (y-axis)
 
 # Add labels and a legend
-plt.title("Graphs of $y^2 = 1 - x$, $y = -x - 1$, and $y = 4$")
+plt.title("Plot of the Functions")
 plt.xlabel("x")
 plt.ylabel("y")
-plt.axhline(0, color="black", linewidth=0.5, ls="--")
-plt.axvline(0, color="black", linewidth=0.5, ls="--")
 plt.grid()
 plt.legend()
+
+# Set the limits for the y-axis
+plt.ylim(-5, 5)
 
 # Show the plot
 plt.show()
