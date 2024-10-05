@@ -42,10 +42,8 @@ while not game_over:
         game_over = True
         print("You lost.")
 
-    for square in snake.squares:
-        if square == snake.head:
-            pass
-        elif snake.head.distance(square) < 10:
+    for square in snake.squares[1:-1]:
+        if snake.head.distance(square) < 10:
             scoreboard.game_over()
             game_over = True
 
