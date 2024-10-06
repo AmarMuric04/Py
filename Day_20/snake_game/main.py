@@ -32,7 +32,7 @@ while not game_over:
         scoreboard.update()
         snake.extend()
 
-    if (
+    if (  
         snake.head.xcor() > 280
         or snake.head.xcor() < -280
         or snake.head.ycor() > 280
@@ -42,7 +42,7 @@ while not game_over:
         game_over = True
         print("You lost.")
 
-    for square in snake.squares[1:-1]:
+    for square in snake.squares[1:]:
         if snake.head.distance(square) < 10:
             scoreboard.game_over()
             game_over = True
